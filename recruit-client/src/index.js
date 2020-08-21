@@ -1,6 +1,21 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-import {Button} from 'antd-mobile'
-import { render } from 'less'
+import { HashRouter, Route, Switch } from 'react-router-dom'
+import { Provider } from 'react-redux'
 
-ReactDom.render(<Button type='primary'>Test</Button>, document.getElementById('root'))
+import Main from './containers/main/main'
+import Login from './containers/login/login'
+import Register from './containers/register/register'
+import store from './redux/store'
+
+ReactDom.render((
+    <Provider store={store}>
+        <HashRouter>
+            <Switch>
+                <Route path='/register' component={Register}></Route>
+                <Route path='/login' component={Login}></Route>
+                <Route component={Main}></Route>
+            </Switch>
+        </HashRouter>
+    </Provider>
+), document.getElementById('root'))
