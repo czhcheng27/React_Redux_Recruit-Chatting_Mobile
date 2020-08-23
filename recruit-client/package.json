@@ -47,5 +47,6 @@
     "react-app-rewired": "^2.1.6",
     "redux-devtools-extension": "^2.13.8",
     "style-loader": "^1.2.1"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }

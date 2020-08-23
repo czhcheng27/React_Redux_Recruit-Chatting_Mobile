@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import {Modal, NavBar, InputItem, Button, WhiteSpace, WingBlank, List, Radio, Icon} from 'antd-mobile'
+import {connect} from 'react-redux'
 
 import Logo from '../../components/logo/logo'
+import { login } from '../../redux/actions'
 
 const Item = List.Item
 const alert = Modal.alert
 
-export default class Register extends Component {
+class Login extends Component {
 
     state = {
         username:'',
@@ -20,7 +22,8 @@ export default class Register extends Component {
     }
 
     login = () => {
-        console.log(this.state);
+        // console.log(this.state);
+        this.props.login(this.state)
     }
 
     toRegister = () => {
@@ -29,13 +32,19 @@ export default class Register extends Component {
 
     render() {
 
+        const {msg} = this.props.user
+
         return (
             <div>
-                <NavBar>Recruit App</NavBar>
+                <NavBar className='navBar'>Recruit App</NavBar>
+
+                <WhiteSpace style={{height:50}} />
 
                 <Logo />
 
-                <WhiteSpace size='lg'/>
+                {msg?<p className='error-msg'>{msg}</p>:null}
+
+                <WhiteSpace size='md'/>
 
                 <WingBlank>
                     <List>
@@ -72,3 +81,8 @@ export default class Register extends Component {
         )
     }
 }
+
+export default connect(
+    state=>({user:state.user}),
+    {login}
+)(Login)
