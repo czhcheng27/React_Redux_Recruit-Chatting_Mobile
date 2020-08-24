@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import {Modal, NavBar, InputItem, Button, WhiteSpace, WingBlank, List, Radio, Icon} from 'antd-mobile'
+import {NavBar, InputItem, Button, WhiteSpace, WingBlank, List} from 'antd-mobile'
 import {connect} from 'react-redux'
 
 import Logo from '../../components/logo/logo'
 import { login } from '../../redux/actions'
 
 const Item = List.Item
-const alert = Modal.alert
 
 class Login extends Component {
 

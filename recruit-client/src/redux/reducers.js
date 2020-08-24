@@ -9,7 +9,7 @@ const initUser = {
 function user(state=initUser, action){
     switch (action.type) {
         case AUTH_SUCCESS://data:user
-            return {...state, ...action.data}
+            return {...action.data}
         case ERROR_MSG://data:msg
             return {...state, msg:action.data}
 
