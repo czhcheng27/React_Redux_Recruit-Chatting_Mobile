@@ -1,7 +1,16 @@
 import React, {Component} from 'react' 
 import {List, Grid} from 'antd-mobile'
+import PropTypes from 'prop-types'
 
 export default class HeaderSelector extends Component { 
+
+    static propTypes = {
+        setHeader: PropTypes.func.isRequired
+    }
+
+    state = {
+        icon:null
+    }
 
     constructor(props){
         super(props);
@@ -13,13 +22,25 @@ export default class HeaderSelector extends Component {
             })
         }
     }
+
+    handClick = ({text, icon}) => {
+        this.setState({icon})
+        this.props.setHeader(text)
+    }
+
     render () { 
-        const listHeader = 'Please select your head image'
+
+        const {icon} = this.state
+        const listHeader = !icon ? 'Please select your head image' : (
+            <div>You select: <img src={icon} alt='header'/></div>
+        )
+        
         return ( 
             <List renderHeader={() => listHeader}>
                 <Grid 
                 data={this.headerList} 
                 columnNum = {5}
+                onClick={this.handClick}
                 />
             </List>
         )
