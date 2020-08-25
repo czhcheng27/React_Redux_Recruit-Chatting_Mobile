@@ -48,8 +48,6 @@ class Login extends Component {
 
                 {msg?<p className='error-msg'>{msg}</p>:null}
 
-                <WhiteSpace size='md'/>
-
                 <WingBlank>
                     <List>
                         <Item>

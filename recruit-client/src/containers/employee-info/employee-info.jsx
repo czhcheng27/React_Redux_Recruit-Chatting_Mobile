@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { NavBar, Button, InputItem, TextareaItem, WhiteSpace } from 'antd-mobile'
 
 import HeaderSelector from '../../components/header-selector/header-selector'
+import {update} from '../../redux/actions'
+import { Redirect } from 'react-router-dom'
 
 class EmployeeInfo extends Component {
 
@@ -26,10 +28,18 @@ class EmployeeInfo extends Component {
     }
 
     clickSave = () => {
-        console.log(this.state);
+        // console.log(this.state);
+        this.props.update(this.state)
     }
     
     render() {
+
+        const {header, type} = this.props.user
+        if(header){
+            const path = type==='employee' ? '/employee' : '/employer'
+            return <Redirect to={path} />
+        }
+        
         return (
             <div>
                 <NavBar>Complete Employee Infomation</NavBar>
@@ -58,5 +68,6 @@ class EmployeeInfo extends Component {
 }
 
 export default connect(
-
+    state => ({user: state.user}),
+    {update}
 )(EmployeeInfo)
