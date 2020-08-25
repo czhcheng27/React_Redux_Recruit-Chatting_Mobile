@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Modal, NavBar, InputItem, Button, WhiteSpace, WingBlank, List, Radio, Icon} from 'antd-mobile'
 import {connect} from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 import Logo from '../../components/logo/logo'
 import { register } from '../../redux/actions'
@@ -47,7 +48,10 @@ class Register extends Component {
     render() {
 
         const {type} = this.state
-        const {msg} = this.props.user
+        const {msg, redirectTo} = this.props.user
+        if(redirectTo){
+            return <Redirect to={redirectTo} />
+        }
         return (
             <div>
                 <NavBar className='navBar'>Recruit App</NavBar>

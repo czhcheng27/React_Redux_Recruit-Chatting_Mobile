@@ -40,4 +40,23 @@ router.post('/login', function (req, res){
   })
 })
 
+//update
+router.post('/update', function (req, res){
+  const user = req.body
+  const userid = req.cookies.userid
+  if(!userid){//if user clear cookies, ask them to login page
+    return res.send({code:1, msg:'Please login first'})
+  }
+  UserModel.findByIdAndUpdate({_id:userid}, user, function (err, oldUser){
+    if(!oldUser){
+      res.send({code:1, msg:'Please login first'})
+      res.clearCookie('userid')
+    }else{
+      const {_id, username, type} = oldUser
+      const data = Object.assign({_id, username, type}, user)//es6
+      res.send({code:0, data})
+    }
+  })
+})
+
 module.exports = router;
