@@ -6,3 +6,5 @@ export const reqRegister = (user) => ajax('/register', user, 'POST')
 export const reqLogin = ({username, password}) => ajax('/login', {username, password}, 'POST')
 //update
 export const reqUpdate = (user) => ajax('/update', user, 'POST')
+//get user state
+export const reqUser = () => ajax('/user')

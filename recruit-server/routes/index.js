@@ -59,4 +59,16 @@ router.post('/update', function (req, res){
   })
 })
 
+//get user based on the userid in cookie
+router.get('/user', function (req, res){
+  const userid = req.cookies.userid
+  if(!userid){//if user clear cookies, ask them to login page
+    return res.send({code:1, msg:'Please login first'})
+  }
+  //read user baased on userid
+  UserModel.findOne({_id:userid}, filter, function (err, user){
+    res.send({code:0, data:user})
+  })
+})
+
 module.exports = router;
