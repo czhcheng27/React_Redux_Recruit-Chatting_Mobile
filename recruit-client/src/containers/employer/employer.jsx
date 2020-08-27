@@ -1,9 +1,15 @@
 import React, {Component} from 'react' 
+import {connect} from 'react-redux'
 
-export default class Employer extends Component { 
+class Employer extends Component { 
     render () { 
         return ( 
             <div>Employer</div>
         )
     }
 }
+
+export default connect(
+    state => ({}),
+    {}
+)(Employer)

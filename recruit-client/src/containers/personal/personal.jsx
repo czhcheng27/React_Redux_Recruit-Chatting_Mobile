@@ -1,10 +1,10 @@
 import React, {Component} from 'react' 
 import {connect} from 'react-redux'
 
-class Employee extends Component { 
+class Personal extends Component { 
     render () { 
         return ( 
-            <div>Employee</div>
+            <div>Personal</div>
         )
     }
 }
@@ -12,4 +12,4 @@ class Employee extends Component {
 export default connect(
     state => ({}),
     {}
-)(Employee)
+)(Personal)
