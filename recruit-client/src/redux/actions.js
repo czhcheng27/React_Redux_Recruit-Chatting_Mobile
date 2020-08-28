@@ -1,12 +1,13 @@
 /* has multiple action creator */
 
-import { reqRegister, reqLogin, reqUpdate, reqUser } from "../api"
-import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER } from "./action-types"
+import { reqRegister, reqLogin, reqUpdate, reqUser, reqUserList } from "../api"
+import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER, RECEIVE_USER_LIST} from "./action-types"
 
 const authSuccess = (user) => ({type:AUTH_SUCCESS, data: user})
 const errorMsg = (msg) => ({type:ERROR_MSG, data:msg})
 const receiveUser = (user) => ({type:RECEIVE_USER, data:user})
 export const resetUser = (msg) => ({type:RESET_USER, data:msg})
+const receiveUserList = (userList) => ({type:RECEIVE_USER_LIST, data:userList})
 
 //register
 export const register = (user) => {
@@ -70,6 +71,17 @@ export const getUserState = () => {
             dispatch(receiveUser(result.data))
         }else{
             dispatch(errorMsg(result.msg))
+        }
+    }
+}
+
+//get userList
+export const getUserList = (type) => {
+    return async dispatch => {
+        const response = await reqUserList(type)
+        const result = response.data
+        if(result.code===0){//data:userList
+            dispatch(receiveUserList(result.data))
         }
     }
 }
