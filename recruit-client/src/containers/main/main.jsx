@@ -12,6 +12,7 @@ import Employee from '../employee/employee'
 import Employer from '../employer/employer'
 import Message from '../message/message'
 import Personal from '../personal/personal'
+import Chat from '../chat/chat'
 import NotFound from '../../components/not-found/not-found'
 import NavFooter from '../../components/nav-footer/nav-footer'
 
@@ -105,6 +106,7 @@ class Main extends Component {
                     }
                     <Route path='/employeeinfo' component={EmployeeInfo}></Route>
                     <Route path='/employerinfo' component={EmployerInfo}></Route>
+                    <Route path='/chat/:userid' component={Chat}></Route>
                     <Route component={NotFound}></Route>
                 </Switch>
                 {currentNav?<NavFooter navList={navList} />:null}
