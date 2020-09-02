@@ -106,7 +106,7 @@ class Main extends Component {
                     }
                     <Route path='/employeeinfo' component={EmployeeInfo}></Route>
                     <Route path='/employerinfo' component={EmployerInfo}></Route>
-                    <Route path='/chat/:userid' component={Chat}></Route>
+                    <Route path='/chat/:targetid' component={Chat}></Route>
                     <Route component={NotFound}></Route>
                 </Switch>
                 {currentNav?<NavFooter navList={navList} />:null}
