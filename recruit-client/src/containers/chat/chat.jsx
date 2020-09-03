@@ -19,7 +19,7 @@ class Chat extends Component {
         const content = this.state.content
         //send request, send message
         if (content) {
-            this.props.sendMsg({ myId, targetId, content })
+            this.props.sendMsg({ targetId, myId, content })
         }
         //clear content in state
         this.setState({ content: '' })

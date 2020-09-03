@@ -4,18 +4,21 @@ import { reqRegister, reqLogin, reqUpdate, reqUser, reqUserList, reqMsgList, req
 import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER, RECEIVE_USER_LIST, RECEIVE_MSG, RECEIVE_MSG_LIST} from "./action-types"
 import io from 'socket.io-client'
 
-function initIO(){
+function initIO(dispatch, userid){
     if(!io.socket){
         io.socket = io('ws://localhost:5000')
         io.socket.on('ServerToClient', function (chatMsg){
             console.log('Client: receive msg back from server', chatMsg);
+            if(userid === chatMsg.from || chatMsg.to){
+                dispatch(receiveMsg(chatMsg))
+            }
         })
     }
     
 }
 
-async function getMsgList(dispatch){
-    initIO()
+async function getMsgList(dispatch, userid){
+    initIO(dispatch, userid)
     const response = await reqMsgList()
     const result = response.data
     if(result.code===0){
@@ -38,6 +41,7 @@ const receiveUser = (user) => ({type:RECEIVE_USER, data:user})
 export const resetUser = (msg) => ({type:RESET_USER, data:msg})
 const receiveUserList = (userList) => ({type:RECEIVE_USER_LIST, data:userList})
 const receiveMsgList = ({users, chatMsgs}) => ({type: RECEIVE_MSG_LIST, data:{users, chatMsgs}})
+const receiveMsg = (chatMsg) => ({type: RECEIVE_MSG, data: chatMsg})
 
 //register
 export const register = (user) => {
@@ -53,7 +57,7 @@ export const register = (user) => {
         const response = await reqRegister({username, password, type})
         const result = response.data//{code:0/1, data:{}/msg:''}
         if(result.code===0){//success
-            getMsgList(dispatch)
+            getMsgList(dispatch, result.data._id)
             dispatch(authSuccess(result.data))
         }else{//fail
             dispatch(errorMsg(result.msg))
@@ -73,7 +77,7 @@ export const login = (user) => {
         const response = await reqLogin(user)
         const result = response.data//{code:0/1, data:{}/msg:''}
         if(result.code===0){//success
-            getMsgList(dispatch)
+            getMsgList(dispatch, result.data._id)
             dispatch(authSuccess(result.data))
         }else{//fail
             dispatch(errorMsg(result.msg))
@@ -100,7 +104,7 @@ export const getUserState = () => {
         const response = await reqUser()
         const result = response.data
         if(result.code===0){//data:user
-            getMsgList(dispatch)
+            getMsgList(dispatch, result.data._id)
             dispatch(receiveUser(result.data))
         }else{
             dispatch(errorMsg(result.msg))
