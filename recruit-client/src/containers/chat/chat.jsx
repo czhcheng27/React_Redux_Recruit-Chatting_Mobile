@@ -1,15 +1,25 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { NavBar, List, InputItem } from 'antd-mobile'
+import { NavBar, List, InputItem, Grid } from 'antd-mobile'
 
 import { sendMsg } from '../../redux/actions'
 
 const Item = List.Item
 
+let emojis = [
+    '😀', '😃', '😄', '😄', '😆', '😅', '🤣', '😂', '🙂', '🙃',
+    '😀', '😃', '😄', '😄', '😆', '😅', '🤣', '😂', '🙂', '🙃',
+    '😀', '😃', '😄', '😄', '😆', '😅', '🤣', '😂', '🙂', '🙃',
+    '😀', '😃', '😄', '😄', '😆', '😅', '🤣', '😂', '🙂', '🙃',
+]
+
+emojis = emojis.map(emoji => ({text: emoji}))
+
 class Chat extends Component {
 
     state = {
-        content: ''
+        content: '',
+        isShow: false
     }
 
     handSend = () => {
@@ -22,8 +32,22 @@ class Chat extends Component {
             this.props.sendMsg({ targetId, myId, content })
         }
         //clear content in state
-        this.setState({ content: '' })
+        this.setState({ 
+            content: '',
+            isShow: false
+        })
     }
+
+    toggleShow = () => {
+        const isShow = !this.state.isShow
+        this.setState({isShow})
+        if (isShow) {
+            setTimeout(() => {
+                window.dispatchEvent(new Event('resize'))
+            }, 0)
+        }
+    }
+
     render() {
 
         const { user } = this.props
@@ -68,25 +92,34 @@ class Chat extends Component {
                         }
                     })
                 }
-{/* 
-                <Item
-                    thumb={require(`../../assets/images/image1.png`)}
-                >Hello, how are you</Item>
 
-                <Item
-                    className='chat-me'
-                    extra={<img src={require(`../../assets/images/image2.png`)} alt='header' />}
-                >I'm fine, thank you</Item> */}
-
+                <div className='am-tab-bar'>
                 <InputItem
-                    className='am-tab-bar'
                     placeholder='Type message here'
                     value={this.state.content}
                     onChange={(val) => this.setState({ content: val })}
+                    onFocus={()=>this.setState({isShow:false})}
                     extra={
-                        <span onClick={this.handSend}>Send</span>
+                        <span>
+                            <span className='emoji' onClick={this.toggleShow}>😀</span>
+                        <span style={{fontSize:18}} onClick={this.handSend}>Send</span>
+                        </span>
                     }
                 ></InputItem>
+
+                {
+                    this.state.isShow ? (
+                        <Grid
+                        data={emojis}
+                        columnNum={8}
+                        hasLine={false}
+                        isCarousel={true}
+                        carouselMaxRow={4}
+                        onClick={(item)=>this.setState({content:this.state.content+item.text})}
+                        />
+                    ) : null
+                }
+                </div>
             </div>
         )
     }
