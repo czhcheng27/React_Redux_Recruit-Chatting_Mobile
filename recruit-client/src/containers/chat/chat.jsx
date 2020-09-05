@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { NavBar, List, InputItem, Grid } from 'antd-mobile'
+import { NavBar, List, InputItem, Grid, Icon } from 'antd-mobile'
 
 import { sendMsg } from '../../redux/actions'
 
@@ -48,6 +48,16 @@ class Chat extends Component {
         }
     }
 
+    componentDidMount(){
+        //initial display list
+        window.scrollTo(0, document.body.scrollHeight)
+    }
+
+    componentDidUpdate(){
+        //update display list
+        window.scrollTo(0, document.body.scrollHeight)
+    }
+
     render() {
 
         const { user } = this.props
@@ -74,8 +84,12 @@ class Chat extends Component {
 
         return (
             <div>
-                <NavBar>{users[targetId].username}</NavBar>
+                <NavBar
+                className='navBar'
+                icon={<Icon type='left' onClick={()=>this.props.history.goBack()}/>}
+                >{users[targetId].username}</NavBar>
 
+                <List style={{marginBottom: 44, marginTop: 44}}>
                 {
                     msgs.map(msg => {
                         if (msg.to === targetId) {//their msg
@@ -92,6 +106,7 @@ class Chat extends Component {
                         }
                     })
                 }
+                </List>
 
                 <div className='am-tab-bar'>
                 <InputItem
