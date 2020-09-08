@@ -10,7 +10,7 @@ function initIO(dispatch, userid){
         io.socket.on('ServerToClient', function (chatMsg){
             console.log('Client: receive msg back from server', chatMsg);
             if(userid === chatMsg.from || chatMsg.to){
-                dispatch(receiveMsg(chatMsg))
+                dispatch(receiveMsg(chatMsg, userid))
             }
         })
     }
@@ -23,7 +23,7 @@ async function getMsgList(dispatch, userid){
     const result = response.data
     if(result.code===0){
         const {users, chatMsgs} = result.data
-        dispatch(receiveMsgList({users, chatMsgs}))
+        dispatch(receiveMsgList({users, chatMsgs, userid}))
     }
 }
 
@@ -40,8 +40,8 @@ const errorMsg = (msg) => ({type:ERROR_MSG, data:msg})
 const receiveUser = (user) => ({type:RECEIVE_USER, data:user})
 export const resetUser = (msg) => ({type:RESET_USER, data:msg})
 const receiveUserList = (userList) => ({type:RECEIVE_USER_LIST, data:userList})
-const receiveMsgList = ({users, chatMsgs}) => ({type: RECEIVE_MSG_LIST, data:{users, chatMsgs}})
-const receiveMsg = (chatMsg) => ({type: RECEIVE_MSG, data: chatMsg})
+const receiveMsgList = ({users, chatMsgs, userid}) => ({type: RECEIVE_MSG_LIST, data:{users, chatMsgs, userid}})
+const receiveMsg = (chatMsg, userid) => ({type: RECEIVE_MSG, data: {chatMsg, userid}})
 
 //register
 export const register = (user) => {
