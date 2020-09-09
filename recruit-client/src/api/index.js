@@ -13,4 +13,4 @@ export const reqUserList = (type) => ajax('/userlist', {type})
 //get msg list
 export const reqMsgList = () => ajax('/msglist')
 //read msg
-export const reqReadMsg = ({from}) => ajax('/readmsg', {from})
+export const reqReadMsg = (from) => ajax('/readmsg', {from}, 'POST')

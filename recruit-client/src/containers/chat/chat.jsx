@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { NavBar, List, InputItem, Grid, Icon } from 'antd-mobile'
 
-import { sendMsg } from '../../redux/actions'
+import { sendMsg, readMsg } from '../../redux/actions'
 
 const Item = List.Item
 
@@ -58,6 +58,13 @@ class Chat extends Component {
         window.scrollTo(0, document.body.scrollHeight)
     }
 
+    goBack = () => {
+        this.props.history.goBack()
+        const targetId = this.props.match.params.targetid
+        const myId = this.props.user._id
+        this.props.readMsg(targetId, myId)
+    }
+
     render() {
 
         const { user } = this.props
@@ -86,7 +93,7 @@ class Chat extends Component {
             <div>
                 <NavBar
                 className='navBar'
-                icon={<Icon type='left' onClick={()=>this.props.history.goBack()}/>}
+                icon={<Icon type='left' onClick={this.goBack}/>}
                 >{users[targetId].username}</NavBar>
 
                 <List style={{marginBottom: 44, marginTop: 44}}>
@@ -142,5 +149,5 @@ class Chat extends Component {
 
 export default connect(
     state => ({ user: state.user, chat: state.chat }),
-    { sendMsg }
+    { sendMsg, readMsg }
 )(Chat)

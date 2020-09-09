@@ -1,7 +1,7 @@
 /* has multiple action creator */
 
 import { reqRegister, reqLogin, reqUpdate, reqUser, reqUserList, reqMsgList, reqReadMsg } from "../api"
-import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER, RECEIVE_USER_LIST, RECEIVE_MSG, RECEIVE_MSG_LIST} from "./action-types"
+import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER, RECEIVE_USER_LIST, RECEIVE_MSG, RECEIVE_MSG_LIST, MSG_READ} from "./action-types"
 import io from 'socket.io-client'
 
 function initIO(dispatch, userid){
@@ -42,6 +42,7 @@ export const resetUser = (msg) => ({type:RESET_USER, data:msg})
 const receiveUserList = (userList) => ({type:RECEIVE_USER_LIST, data:userList})
 const receiveMsgList = ({users, chatMsgs, userid}) => ({type: RECEIVE_MSG_LIST, data:{users, chatMsgs, userid}})
 const receiveMsg = (chatMsg, userid) => ({type: RECEIVE_MSG, data: {chatMsg, userid}})
+const msgRead = ({count, targetId, myId}) => ({type: MSG_READ, data:{count, targetId, myId}})
 
 //register
 export const register = (user) => {
@@ -123,3 +124,15 @@ export const getUserList = (type) => {
     }
 }
 
+//read msg
+export const readMsg = (targetId, myId) => {
+    return async dispatch => {
+        const response = await reqReadMsg(targetId)
+        const result = response.data
+        if(result.code===0){
+            const count = result.data
+            // console.log('count', count);
+            dispatch(msgRead({count, targetId, myId}))
+        }
+    }
+}

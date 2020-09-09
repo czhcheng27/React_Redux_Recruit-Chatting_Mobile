@@ -59,6 +59,7 @@ class Message extends Component {
 
         //use chat_id to group chatMsgs
         const lastMsgs = getLastMsgs(chatMsgs, user)
+        console.log('lastMsgs',lastMsgs);
 
         return (
             <List style={{ marginBottom: 50 }}>
