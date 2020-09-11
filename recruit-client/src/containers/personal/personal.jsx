@@ -43,6 +43,10 @@ class Personal extends Component {
                     </Item>
                 </List>
 
+                <WhiteSpace style={{height:50}}/>
+
+                <Button type='primary' onClick = {()=>this.props.history.push('/edit')}>Edit Personal Info</Button>
+
                 <WhiteSpace size='xl'/>
 
                 <Button type='warning' onClick = {this.logout}>Log Out</Button>
