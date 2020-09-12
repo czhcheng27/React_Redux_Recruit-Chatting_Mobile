@@ -13,11 +13,13 @@ class EmployeeInfo extends Component {
         post: '',
         info: '',
         salary: '',
+        headUrl: ''
     }
 
-    setHeader = (text) => {
+    setHeader = (text, headUrl) => {
         this.setState({
-            header: text
+            header: text,
+            headUrl
         })
     }
 
@@ -42,7 +44,9 @@ class EmployeeInfo extends Component {
         
         return (
             <div>
-                <NavBar>Complete Employee Infomation</NavBar>
+                <NavBar className='navBar'>Complete Employee Infomation</NavBar>
+
+                <WhiteSpace style={{height:50}} />
 
                 <HeaderSelector setHeader = {this.setHeader} />
 

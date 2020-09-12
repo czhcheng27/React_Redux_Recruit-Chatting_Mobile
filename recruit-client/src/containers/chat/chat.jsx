@@ -83,11 +83,11 @@ class Chat extends Component {
         // console.log('users', users);
         // console.log('targetId', targetId);
 
-        const targetHeader = users[targetId].header
-        const targetIcon = targetHeader ? require(`../../assets/images/${targetHeader}.png`) : null
+        const targetHeader = users[targetId].headUrl
+        const targetIcon = targetHeader ? users[targetId].headUrl : null
 
         const myHeader = user.header
-        const myIcon = myHeader ? <img src={require(`../../assets/images/${myHeader}.png`)} alt='header' /> : null
+        const myIcon = myHeader ? <img src={user.headUrl} alt='header' /> : null
 
         return (
             <div>
@@ -102,7 +102,7 @@ class Chat extends Component {
                         if (msg.to === targetId) {//their msg
                             return <Item
                                 key={msg._id}
-                                thumb={targetIcon}
+                                thumb={<img src={targetIcon} alt='header'/>}
                             >{msg.content}</Item>
                         } else {//my message
                             return <Item

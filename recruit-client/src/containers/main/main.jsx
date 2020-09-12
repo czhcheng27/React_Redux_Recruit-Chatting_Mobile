@@ -14,6 +14,7 @@ import Message from '../message/message'
 import Personal from '../personal/personal'
 import Chat from '../chat/chat'
 import Edit from '../edit/edit'
+import UpdateHeadImage from '../update-head-image/update-head-image'
 import NotFound from '../../components/not-found/not-found'
 import NavFooter from '../../components/nav-footer/nav-footer'
 
@@ -110,6 +111,7 @@ class Main extends Component {
                     <Route path='/employeeinfo' component={EmployeeInfo}></Route>
                     <Route path='/employerinfo' component={EmployerInfo}></Route>
                     <Route path='/edit' component={Edit}></Route>
+                    <Route path='/update-head-image' component={UpdateHeadImage}></Route>
                     <Route path='/chat/:targetid' component={Chat}></Route>
                     <Route component={NotFound}></Route>
                 </Switch>

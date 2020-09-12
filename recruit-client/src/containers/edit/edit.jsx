@@ -8,14 +8,15 @@ class Edit extends Component {
 
     constructor(props) {
         super(props);
-        const {header, company, salary, info, post} = this.props.user
+        const {header, company, salary, info, post, headUrl} = this.props.user
         this.state = {
             header:header,
             post:post,
             company:company,
             salary:salary,
             info:info,
-            isInfoChanged:''
+            isInfoChanged:'',
+            headUrl: headUrl
         };
       }
 
@@ -33,7 +34,7 @@ class Edit extends Component {
 
     render () { 
 
-        const {username, header, type, company, salary, info, post} = this.props.user
+        const {username, header, type, company, salary, info, post, headUrl} = this.props.user
         const {isInfoChanged} = this.state
         return ( 
             <div>
@@ -41,7 +42,7 @@ class Edit extends Component {
 
                 <WhiteSpace style={{height:50}} />
 
-                <Result img={<img src={header?require(`../../assets/images/${header}.png`):null} style={{height:66, width:66}} alt='header'/>} title={username}/>
+                <Result img={<img src={header?headUrl:null} style={{height:66, width:66}} alt='header' onClick={()=>this.props.history.push('/update-head-image')}/>} title={username}/>
 
                 <WhiteSpace size='lg'/>
 

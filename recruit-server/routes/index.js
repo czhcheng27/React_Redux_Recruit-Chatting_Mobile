@@ -86,7 +86,7 @@ router.get('/msglist', function (req, res){
   UserModel.find(function (err, userDocs){
     const users = {} //object container
     userDocs.forEach(doc =>{
-      users[doc._id] = {username: doc.username, header: doc.header}
+      users[doc._id] = {username: doc.username, headUrl: doc.headUrl}
     })
     //search all chat message that related to userid
     ChatModel.find({'$or': [{from: userid}, {to: userid}]}, filter, function (err, chatMsgs){

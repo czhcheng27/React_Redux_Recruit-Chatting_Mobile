@@ -9,7 +9,7 @@ function initIO(dispatch, userid){
         io.socket = io('ws://localhost:5000')
         io.socket.on('ServerToClient', function (chatMsg){
             console.log('Client: receive msg back from server', chatMsg);
-            if(userid === chatMsg.from || chatMsg.to){
+            if(userid === chatMsg.from || userid === chatMsg.to){
                 dispatch(receiveMsg(chatMsg, userid))
             }
         })
