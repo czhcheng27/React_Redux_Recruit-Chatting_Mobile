@@ -101,7 +101,7 @@ class Main extends Component {
         return ( 
             <div>
 
-                {currentNav?<NavBar>{currentNav.title}</NavBar>:null}
+                {currentNav?<NavBar className='navBar'>{currentNav.title}</NavBar>:null}
                 <Switch>
                     {
                         navList.map((nav, index) => (

@@ -13,7 +13,7 @@ let emojis = [
     '😀', '😃', '😄', '😄', '😆', '😅', '🤣', '😂', '🙂', '🙃',
 ]
 
-emojis = emojis.map(emoji => ({text: emoji}))
+emojis = emojis.map(emoji => ({ text: emoji }))
 
 class Chat extends Component {
 
@@ -32,7 +32,7 @@ class Chat extends Component {
             this.props.sendMsg({ targetId, myId, content })
         }
         //clear content in state
-        this.setState({ 
+        this.setState({
             content: '',
             isShow: false
         })
@@ -40,7 +40,7 @@ class Chat extends Component {
 
     toggleShow = () => {
         const isShow = !this.state.isShow
-        this.setState({isShow})
+        this.setState({ isShow })
         if (isShow) {
             setTimeout(() => {
                 window.dispatchEvent(new Event('resize'))
@@ -48,12 +48,12 @@ class Chat extends Component {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         //initial display list
         window.scrollTo(0, document.body.scrollHeight)
     }
 
-    componentDidUpdate(){
+    componentDidUpdate() {
         //update display list
         window.scrollTo(0, document.body.scrollHeight)
     }
@@ -71,7 +71,7 @@ class Chat extends Component {
         const { users, chatMsgs } = this.props.chat
 
         const myId = user._id
-        if(!users[myId]){
+        if (!users[myId]) {
             return null
         }
         const targetId = this.props.match.params.targetid
@@ -92,55 +92,65 @@ class Chat extends Component {
         return (
             <div>
                 <NavBar
-                className='navBar'
-                icon={<Icon type='left' onClick={this.goBack}/>}
+                    className='navBar'
+                    icon={<Icon type='left' onClick={this.goBack} />}
                 >{users[targetId].username}</NavBar>
 
-                <List style={{marginBottom: 44, marginTop: 44}}>
-                {
-                    msgs.map(msg => {
-                        if (msg.to === targetId) {//their msg
-                            return <Item
-                                key={msg._id}
-                                thumb={<img src={targetIcon} alt='header'/>}
-                            >{msg.content}</Item>
-                        } else {//my message
-                            return <Item
-                            key={msg._id}
-                                className='chat-me'
-                                extra={myIcon}
-                            >{msg.content}</Item>
-                        }
-                    })
-                }
+                <List style={{ marginBottom: 44, marginTop: 44, backgroundColor:'red' }} className='chatMsgs'>
+                    {
+                        msgs.map(msg => {
+                            if (msg.to === targetId) {//their msg
+                                return <Item
+                                    key={msg._id}
+                                    thumb={<img src={targetIcon} alt='header' />}
+                                    style={{backgroundColor:'#f5f5f9'}}
+                                >
+                                    <span className='theirMsg'>
+                                        {msg.content}
+                                    </span>
+                                </Item>
+                            } else {//my message
+                                return <Item
+                                    key={msg._id}
+                                    className='chat-me'
+                                    extra={myIcon}
+                                    style={{backgroundColor:'#f5f5f9'}}
+                                >
+                                    <span className='myMsg'>
+                                        {msg.content}
+                                    </span>
+                                </Item>
+                            }
+                        })
+                    }
                 </List>
 
                 <div className='am-tab-bar'>
-                <InputItem
-                    placeholder='Type message here'
-                    value={this.state.content}
-                    onChange={(val) => this.setState({ content: val })}
-                    onFocus={()=>this.setState({isShow:false})}
-                    extra={
-                        <span>
-                            <span className='emoji' onClick={this.toggleShow}>😀</span>
-                        <span style={{fontSize:18}} onClick={this.handSend}>Send</span>
-                        </span>
-                    }
-                ></InputItem>
+                    <InputItem
+                        placeholder='Type message here'
+                        value={this.state.content}
+                        onChange={(val) => this.setState({ content: val })}
+                        onFocus={() => this.setState({ isShow: false })}
+                        extra={
+                            <span>
+                                <span className='emoji' onClick={this.toggleShow}>😀</span>
+                                <span style={{ fontSize: 18 }} onClick={this.handSend}>Send</span>
+                            </span>
+                        }
+                    ></InputItem>
 
-                {
-                    this.state.isShow ? (
-                        <Grid
-                        data={emojis}
-                        columnNum={8}
-                        hasLine={false}
-                        isCarousel={true}
-                        carouselMaxRow={4}
-                        onClick={(item)=>this.setState({content:this.state.content+item.text})}
-                        />
-                    ) : null
-                }
+                    {
+                        this.state.isShow ? (
+                            <Grid
+                                data={emojis}
+                                columnNum={8}
+                                hasLine={false}
+                                isCarousel={true}
+                                carouselMaxRow={4}
+                                onClick={(item) => this.setState({ content: this.state.content + item.text })}
+                            />
+                        ) : null
+                    }
                 </div>
             </div>
         )

@@ -19,6 +19,7 @@ class Personal extends Component {
                 onPress: () => {
                     Cookies.remove('userid');
                     this.props.resetUser()
+                    window.location.reload()
                 }
             }
         ])
@@ -28,6 +29,9 @@ class Personal extends Component {
         const {header, company, username, type, salary, info, post, headUrl} = this.props.user
         return ( 
             <div>
+
+                <WhiteSpace style={{height:50}} />
+                
                 <Result
                 img={<img src={header?headUrl:null} style={{height:66, width:66}} alt='header'/>}
                 title={username}

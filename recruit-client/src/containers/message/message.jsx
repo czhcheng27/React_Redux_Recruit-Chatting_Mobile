@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { List, Badge } from 'antd-mobile'
+import { List, Badge, WhiteSpace } from 'antd-mobile'
 
 const Item = List.Item
 const Brief = Item.Brief
@@ -62,6 +62,10 @@ class Message extends Component {
         console.log('lastMsgs',lastMsgs);
 
         return (
+
+            <div>
+                <WhiteSpace style={{height:45}} />
+            
             <List style={{ marginBottom: 50 }}>
 
                 {
@@ -82,6 +86,7 @@ class Message extends Component {
                 }
 
             </List>
+            </div>
         )
     }
 }

@@ -21,6 +21,8 @@ class UserList extends Component {
         return (
             <WingBlank>
 
+            <WhiteSpace style={{height:50}} />
+
                 <QueueAnim type='scale'>
                     
 
@@ -64,6 +66,8 @@ class UserList extends Component {
                         })
                     }
                 </QueueAnim>
+
+                <WhiteSpace style={{height:55}} />
 
             </WingBlank>
         )
